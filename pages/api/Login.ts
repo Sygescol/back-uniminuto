@@ -30,10 +30,6 @@ export default async function handler(
 
     let consulta = `SELECT rol, rol_nombre, idUsuario, tipo, subsede,ChangePass FROM usuario INNER JOIN rol ON usuario.rol = rol.rol_id WHERE login = '${Usuario?.toLowerCase()}' AND pass = '${Pass}'`;
 
-    console.log(
-      `SELECT rol, rol_nombre, idUsuario, tipo, subsede,ChangePass FROM usuario INNER JOIN rol ON usuario.rol = rol.rol_id WHERE login = '${Usuario?.toLowerCase()}' AND pass = '${Pass}'`
-    );
-
     let DemasInfo = {};
     let Notificaciones: [] = [];
 
