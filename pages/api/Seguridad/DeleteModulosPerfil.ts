@@ -30,7 +30,7 @@ export default async function handler(
       return;
     }
     const [UsuarioDelete]: any = await connectionPool.query(`
-    DELETE FROM usuario WHERE usu_rol = ${id}
+    DELETE FROM usuario WHERE rol = ${id}
     `);
     if (UsuarioDelete.affectedRows === 0) {
       res.status(400).json({ body: "No se encontraron usuarios con ese rol" });

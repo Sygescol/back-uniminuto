@@ -20,12 +20,12 @@ export default async function handler(
   try {
     const { PruebaID } = req.query;
 
-    console.log(`
-    SELECT preguntas_pruebas.id as PreguntaId,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre,pfc_ejes.eje_id idCompetencia, pfc_ejes.eje_nom CompetenciaNombre,pregunta,opciones,punto,pfc_ejes.eje_tip as TipoCompetencia,preguntas_pruebas.respuesta,preguntas_pruebas.prueba as IdPrueba FROM preguntas_pruebas INNER JOIN pfc_ejes ON pfc_ejes.eje_id=preguntas_pruebas.competencia WHERE preguntas_pruebas.prueba='${PruebaID}' and preguntas_pruebas.aprobo=2 ORDER BY RAND() ASC
-    `);
+    // console.log(`
+    // SELECT preguntas_pruebas.id as PreguntaId,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre,pfc_ejes.eje_id idCompetencia, pfc_ejes.eje_nom CompetenciaNombre,pregunta,opciones,punto,pfc_ejes.eje_tip as TipoCompetencia,preguntas_pruebas.respuesta,preguntas_pruebas.prueba as IdPrueba FROM preguntas_pruebas INNER JOIN pfc_ejes ON pfc_ejes.eje_id=preguntas_pruebas.competencia WHERE preguntas_pruebas.prueba='${PruebaID}' and preguntas_pruebas.aprobo=2 ORDER BY RAND() ASC
+    // `);
 
     const [competenciasRes]: any = await connectionPool.query(`
-    SELECT preguntas_pruebas.id as PreguntaId,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre,pfc_ejes.eje_id idCompetencia, pfc_ejes.eje_nom CompetenciaNombre,pregunta,opciones,punto,pfc_ejes.eje_tip as TipoCompetencia,preguntas_pruebas.respuesta,preguntas_pruebas.prueba as IdPrueba FROM preguntas_pruebas INNER JOIN pfc_ejes ON pfc_ejes.eje_id=preguntas_pruebas.competencia WHERE preguntas_pruebas.prueba='${PruebaID}' and preguntas_pruebas.aprobo=2 ORDER BY RAND() ASC
+    SELECT preguntas_pruebas.id as PreguntaId,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre,pfc_ejes.eje_id idCompetencia, pfc_ejes.eje_nom CompetenciaNombre,pregunta,opciones,punto,pfc_ejes.eje_tip as TipoCompetencia,preguntas_pruebas.respuesta,preguntas_pruebas.prueba as IdPrueba FROM preguntas_pruebas INNER JOIN pfc_ejes ON pfc_ejes.eje_id=preguntas_pruebas.competencia WHERE preguntas_pruebas.prueba='${PruebaID}' and preguntas_pruebas.aprobo=2 ORDER BY TipoCompetencia,RAND() desc
     `);
 
     let newData: any[] = [];
@@ -55,7 +55,7 @@ export default async function handler(
     }
 
     let Preguntas = newData?.reduce((acc: any, item: any) => {
-      let key = `${item.TipoCompetencia}`;
+      let key = `${item.TipoCompetencia}-${item.CompetenciaNombre}`;
       if (!acc[key]) {
         acc[key] = {
           TipoCompetencia: item.TipoCompetencia,
@@ -66,6 +66,8 @@ export default async function handler(
       acc[key].Preguntas.push(item);
       return acc;
     }, {});
+
+    console.log("Preguntas", Preguntas);
 
     res.status(200).json({
       Preguntas: Object.values(Preguntas) || [],

@@ -37,7 +37,7 @@ export default async function handler(
       respuestasFormated = `${respuestasFormated}${res}~${textos[key]}@`;
     });
     const [competencias]: any = await connectionPool.query(
-      "SELECT eje_nom,eje_id FROM pfc_ejes"
+      `SELECT eje_nom,eje_id  FROM asignacionPrueba INNER JOIN pfc_ejes ON eje_id = competencia WHERE prueba=${prueba}`
     );
     const competenciaFind = competencias.filter((e: any) =>
       e.eje_nom.toLowerCase().includes(`${competencia.toLowerCase()}`)

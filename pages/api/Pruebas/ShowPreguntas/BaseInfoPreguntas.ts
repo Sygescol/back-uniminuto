@@ -22,12 +22,12 @@ export default async function handler(
 
     console.log(req.body);
 
-    // console.log(
-    //   `SELECT preguntas_pruebas.id as Id,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre, preguntas_pruebas.pregunta as Pregunta,preguntas_pruebas.opciones,preguntas_pruebas.respuesta,preguntas_pruebas.punto, preguntas_pruebas.aprobo FROM preguntas_pruebas  INNER JOIN asignacionPrueba ON asignacionPrueba.prueba=preguntas_pruebas.prueba WHERE asignacionPrueba.docente='${IdUser}' AND asignacionPrueba.prueba='${prueba}' and asignacionPrueba.competencia='${competencia}'`
-    // );
+    console.log(
+      `SELECT preguntas_pruebas.id as Id,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre, preguntas_pruebas.pregunta as Pregunta,preguntas_pruebas.opciones,preguntas_pruebas.respuesta,preguntas_pruebas.punto, preguntas_pruebas.aprobo FROM preguntas_pruebas  INNER JOIN asignacionPrueba ON asignacionPrueba.prueba=preguntas_pruebas.prueba AND asignacionPrueba.competencia = preguntas_pruebas.competencia WHERE asignacionPrueba.docente='${IdUser}' AND asignacionPrueba.prueba='${prueba}' and asignacionPrueba.competencia='${competencia}'`
+    );
 
     const [informacion]: any = await connectionPool.query(
-      `SELECT preguntas_pruebas.id as Id,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre, preguntas_pruebas.pregunta as Pregunta,preguntas_pruebas.opciones,preguntas_pruebas.respuesta,preguntas_pruebas.punto, preguntas_pruebas.aprobo FROM preguntas_pruebas  INNER JOIN asignacionPrueba ON asignacionPrueba.prueba=preguntas_pruebas.prueba WHERE asignacionPrueba.docente='${IdUser}' AND asignacionPrueba.prueba='${prueba}' and asignacionPrueba.competencia='${competencia}'`
+      `SELECT preguntas_pruebas.id as Id,preguntas_pruebas.tipo as TipoPregunta,preguntas_pruebas.padre, preguntas_pruebas.pregunta as Pregunta,preguntas_pruebas.opciones,preguntas_pruebas.respuesta,preguntas_pruebas.punto, preguntas_pruebas.aprobo FROM preguntas_pruebas  INNER JOIN asignacionPrueba ON asignacionPrueba.prueba=preguntas_pruebas.prueba AND asignacionPrueba.competencia = preguntas_pruebas.competencia WHERE asignacionPrueba.docente='${IdUser}' AND asignacionPrueba.prueba='${prueba}' and asignacionPrueba.competencia='${competencia}'`
     );
     const [retro]: any = await connectionPool.query("SELECT * FROM retroalimentacionPregunta")
     let newData: any[] = [];

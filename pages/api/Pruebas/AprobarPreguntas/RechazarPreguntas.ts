@@ -41,7 +41,7 @@ export default async function handler(
     const [InsertNotificacion]: any = await connectionPool.query(`
     INSERT INTO notifications (Rol, user_id, message, Link) VALUES ('2', '${
       DocenteAsignado[0]?.IdDocente || 0
-    }', 'Se ha devuelto una pregunta revise la bandeja de preguntas y debe encontrase con color amarillo', '/Pruebas/IngresoPreguntas?SubSede=${
+    }', 'Favor verificar a través de este enlace la pregunta devuelta por coordinación de curriculo. La identificara por el botón rojo dentro de la gama de consulta', '/Pruebas/IngresoPreguntas?SubSede=${
       DocenteAsignado[0]?.subSedeId || 0
     }&IdRol=2&IdUser=${DocenteAsignado[0]?.IdDocente || 0}')`);
 
