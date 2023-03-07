@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import connectionPool from "../../../../config/db";
-import { Administrativo } from "../../../../typings";
 
 type Data = {};
 
